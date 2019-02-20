@@ -11,15 +11,135 @@ class Host implements \JsonSerializable
     protected $interfaceType;
     protected $active;
     protected $hostName;
+    protected $guest = false;
+    protected $speed;
+
+    /**
+     * @return bool
+     */
+    public function isGuest(): bool
+    {
+        return $this->guest;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpeed()
+    {
+        return $this->speed;
+    }
+
+    /**
+     * @param mixed $ipAddress
+     *
+     * @return Host
+     */
+    public function setIpAddress($ipAddress)
+    {
+        $this->ipAddress = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $macAddress
+     *
+     * @return Host
+     */
+    public function setMacAddress($macAddress)
+    {
+        $this->macAddress = $macAddress;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $leaseTimeRemaining
+     *
+     * @return Host
+     */
+    public function setLeaseTimeRemaining($leaseTimeRemaining)
+    {
+        $this->leaseTimeRemaining = $leaseTimeRemaining;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $addressSource
+     *
+     * @return Host
+     */
+    public function setAddressSource($addressSource)
+    {
+        $this->addressSource = $addressSource;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $interfaceType
+     *
+     * @return Host
+     */
+    public function setInterfaceType($interfaceType)
+    {
+        $this->interfaceType = $interfaceType;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $active
+     *
+     * @return Host
+     */
+    public function setActive(bool $active): Host
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $hostName
+     *
+     * @return Host
+     */
+    public function setHostName($hostName)
+    {
+        $this->hostName = $hostName;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $guest
+     *
+     * @return Host
+     */
+    public function setGuest(bool $guest): Host
+    {
+        $this->guest = $guest;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $speed
+     *
+     * @return Host
+     */
+    public function setSpeed($speed)
+    {
+        $this->speed = $speed;
+
+        return $this;
+    }
 
     public function __construct(
-        $ipAddress,
-        $macAddress,
-        $leaseTimeRemaining,
-        $addressSource,
-        $interfaceType,
-        $active,
-        $hostName
+        $ipAddress, $macAddress, $leaseTimeRemaining, $addressSource, $interfaceType, $active, $hostName
     ) {
         $this->ipAddress = $ipAddress;
         $this->macAddress = $macAddress;
@@ -39,9 +159,15 @@ class Host implements \JsonSerializable
      */
     public static function fromResponse(array $apiResponse)
     {
-        return new static($apiResponse['NewIPAddress'], $apiResponse['NewMACAddress'],
-            $apiResponse['NewLeaseTimeRemaining'], $apiResponse['NewAddressSource'], $apiResponse['NewInterfaceType'],
-            $apiResponse['NewActive'], $apiResponse['NewHostName']);
+        return new static(
+            $apiResponse['NewIPAddress'],
+            $apiResponse['NewMACAddress'],
+            $apiResponse['NewLeaseTimeRemaining'],
+            $apiResponse['NewAddressSource'],
+            $apiResponse['NewInterfaceType'],
+            $apiResponse['NewActive'],
+            $apiResponse['NewHostName']
+        );
     }
 
     /**
